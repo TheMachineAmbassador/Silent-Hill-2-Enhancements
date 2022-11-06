@@ -453,6 +453,11 @@ void DelayedStart()
 		PatchGameLoad();
 	}
 
+	if (QuickSaveTweaks)
+	{
+		PatchQuickSavePos();
+	}
+
 	// Game Save Sound Fix
 	if (SaveGameSoundFix)
 	{
