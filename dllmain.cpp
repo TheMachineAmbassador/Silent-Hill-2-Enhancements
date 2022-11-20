@@ -149,13 +149,7 @@ void DelayedStart()
 		Logging::Log() << "Config file: " << configpath;
 		Logging::Log() << "|----------- SETTINGS -----------";
 
-		// Log config settings
-		char* szCfg = Read(configpath);
-		if (szCfg)
-		{
-			Parse(szCfg, LogCallback);
-			free(szCfg);
-		}
+		LogSettings();
 
 		Logging::Log() << "|--------------------------------";
 	}
@@ -216,7 +210,7 @@ void DelayedStart()
 	}
 
 	// Hook DirectInput8
-	if (RestoreVibration)
+	if (HookDirectInput)
 	{
 		HookDirectInput8Create();
 	}
@@ -513,7 +507,7 @@ void DelayedStart()
 	}
 
 	// Patch resolution list in the Options menu
-	if (((DynamicResolution && WidescreenFix) || LockResolution) && CustomExeStrSet)
+	if (((DynamicResolution || LockResolution) && WidescreenFix) && CustomExeStrSet)
 	{
 		SetResolutionPatch();
 	}
@@ -650,7 +644,7 @@ bool APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 		if (wrapper_dll)
 		{
 			FreeModule(wrapper_dll);
-	}
+		}
 #endif // DEBUG
 
 		// Reenabling screensaver
